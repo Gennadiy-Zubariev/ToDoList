@@ -34,6 +34,7 @@ class TagDeleteView(generic.DeleteView):
 class IndexView(generic.ListView):
     model = Task
     template_name = "todo/index.html"
+    queryset = Task.objects.prefetch_related("tags")
 
 
 class TaskCreateView(generic.CreateView):

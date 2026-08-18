@@ -30,6 +30,7 @@ SECRET_KEY = os.getenv("SECRET_KEY", "your_secret_key")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG", "False") == "True"
 
+
 ALLOWED_HOSTS = []
 
 
@@ -131,3 +132,8 @@ MAILERS = {
         "BACKEND": "django.core.mail.backends.console.EmailBackend",
     },
 }
+
+if DEBUG:
+    INSTALLED_APPS += ["debug_toolbar"]
+    MIDDLEWARE.insert(0, "debug_toolbar.middleware.DebugToolbarMiddleware")
+    INTERNAL_IPS = ["127.0.0.1"]
