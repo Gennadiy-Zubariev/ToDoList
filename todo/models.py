@@ -16,9 +16,7 @@ class Task(models.Model):
     tags = models.ManyToManyField(Tag, blank=True, related_name="task")
 
     def __str__(self):
-        text = (
-            f"Task {self.pk}: created at-{self.created_at}, content - {self.content}."
-        )
+        text = f"Task {self.pk}: created at-{self.created_at}, content - {self.content}."
         if self.deadline:
             return text + f" DEADLINE - {self.deadline}"
         return text

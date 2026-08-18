@@ -4,24 +4,23 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('todo', '0002_alter_task_created_at_alter_task_deadline'),
+        ("todo", "0002_alter_task_created_at_alter_task_deadline"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='task',
-            options={'ordering': ('is_completed', '-created_at')},
+            name="task",
+            options={"ordering": ("is_completed", "-created_at")},
         ),
         migrations.AlterField(
-            model_name='task',
-            name='created_at',
+            model_name="task",
+            name="created_at",
             field=models.DateTimeField(auto_now_add=True),
         ),
         migrations.AlterField(
-            model_name='task',
-            name='deadline',
+            model_name="task",
+            name="deadline",
             field=models.DateTimeField(blank=True, null=True),
         ),
     ]

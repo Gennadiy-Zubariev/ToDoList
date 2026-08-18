@@ -23,8 +23,6 @@ class TaskForm(forms.ModelForm):
                 )
         else:
             if deadline < timezone.now():
-                raise forms.ValidationError(
-                    "Deadline cannot be earlier than the current time."
-                )
+                raise forms.ValidationError("Deadline cannot be earlier than the current time.")
 
         return deadline
