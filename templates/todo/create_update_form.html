@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+  {% if object %}
+    <h1>Create</h1>
+  {% else %}
+    <h1>Update</h1>
+  {% endif %}
+  <form action="" method="post" novalidate>
+    {% csrf_token %}
+    {{ form }}
+
+    <input type="submit" value="Submit" class="btn btn-primary">
+  </form>
+{% endblock %}
