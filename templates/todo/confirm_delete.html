@@ -1,15 +1,21 @@
 {% extends "base.html" %}
+
+{% block title %}<title>Confirm Delete</title>{% endblock %}
+
 {% block content %}
-	<p>Are you shure? You want DELETE
-    <span class="text-danger">{{ object }}</span>
-  </p>
-  <form action="" method="post">
-  {% csrf_token %}
-    <div class="d-flex gap-2">
-      <button type="submit" class="btn btn-danger flex-grow-1">Delete</button>
-      <a href="{{ delete_url }}" class="btn btn-outline-secondary flex-grow-1">
-        Cancel
-      </a>
-    </div>
-  </form>
+  <div class="delete-card">
+    <p>
+      Are you sure you want to delete
+      <span class="object-name">{{ object }}</span>?
+      This action cannot be undone.
+    </p>
+
+    <form action="" method="post">
+      {% csrf_token %}
+      <div class="form-actions">
+        <button type="submit" class="btn btn-danger">Delete</button>
+        <a href="javascript:history.back()" class="btn btn-outline">Cancel</a>
+      </div>
+    </form>
+  </div>
 {% endblock %}

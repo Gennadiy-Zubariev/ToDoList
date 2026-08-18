@@ -1,15 +1,20 @@
 {% extends "base.html" %}
 
-{% block content %}
-  {% if object %}
-    <h1>Create</h1>
-  {% else %}
-    <h1>Update</h1>
-  {% endif %}
-  <form action="" method="post" novalidate>
-    {% csrf_token %}
-    {{ form }}
+{% block title %}
+  <title>{% if object %}Update{% else %}Create{% endif %}</title>
+{% endblock %}
 
-    <input type="submit" value="Submit" class="btn btn-primary">
-  </form>
+{% block content %}
+  <div class="form-card">
+    <h1>{% if object %}Update{% else %}Create{% endif %}</h1>
+
+    <form action="" method="post" novalidate>
+      {% csrf_token %}
+      {{ form.as_p }}
+      <div class="form-actions">
+        <input type="submit" value="Save" class="btn btn-primary">
+        <a href="javascript:history.back()" class="btn btn-outline">Cancel</a>
+      </div>
+    </form>
+  </div>
 {% endblock %}

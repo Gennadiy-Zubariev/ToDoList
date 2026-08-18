@@ -1,10 +1,12 @@
 from django.db import models
 
+
 class Tag(models.Model):
     name = models.CharField(max_length=255)
 
     def __str__(self):
         return self.name
+
 
 class Task(models.Model):
     content = models.TextField()
@@ -14,17 +16,12 @@ class Task(models.Model):
     tags = models.ManyToManyField(Tag, blank=True, related_name="task")
 
     def __str__(self):
-        text = f"Task {self.pk}: created at-{self.created_at}, content - {self.content}."
+        text = (
+            f"Task {self.pk}: created at-{self.created_at}, content - {self.content}."
+        )
         if self.deadline:
             return text + f" DEADLINE - {self.deadline}"
         return text
 
     class Meta:
         ordering = ("is_completed", "-created_at")
-
-
-
-
-
-
-

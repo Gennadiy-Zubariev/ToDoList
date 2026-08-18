@@ -4,20 +4,19 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('todo', '0001_initial'),
+        ("todo", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='task',
-            name='created_at',
+            model_name="task",
+            name="created_at",
             field=models.DateField(auto_now_add=True),
         ),
         migrations.AlterField(
-            model_name='task',
-            name='deadline',
+            model_name="task",
+            name="deadline",
             field=models.DateField(blank=True, null=True),
         ),
     ]
