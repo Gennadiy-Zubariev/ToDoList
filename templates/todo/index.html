@@ -1,27 +1,68 @@
 {% extends "base.html" %}
 
-{% block title %}
-  <title>Homepage</title>
-{% endblock %}
-
-{% block sidebar %}
-  {% include "includes/sidebar.html" %}
-{% endblock %}
+{% block title %}<title>TODO List</title>{% endblock %}
 
 {% block content %}
-  <h1>TODO list</h1>
-  <a href="{% url 'todo:task-create' %}">Create</a>
-  {% for task in task_list %}
-  <ul>
-    <li>{{ task.content }} {% if task.is_completed == True %} Done {% else %} Not Done {%endif %}</li>
-    <li>Created: {{ task.created_at }}</li>
-    {% for tag in task.tags.all %}
-    <li>Tags: {{ tag }}</li>
-    {% endfor %}
-    <a href="{% url 'todo:task-update' task.pk %}">Update</a>
-    <a href="{% url 'todo:task-delete' task.pk %}">Delete</a>
-    <a href="{% url 'todo:toggle-complete' task.pk %}">BTN</a>
+  <div class="page-header">
+    <h1>TODO List</h1>
+    <a href="{% url 'todo:task-create' %}" class="btn btn-primary">+ Add task</a>
+  </div>
 
-  </ul>
-  {% endfor %}
+  {% if task_list %}
+    {% for task in task_list %}
+      <div class="task-card {% if task.is_completed %}done{% endif %}">
+
+        <div class="task-info">
+          <div class="task-title">
+            {{ task.content }}
+            {% if task.is_completed %}
+              <span class="badge badge-done">Done</span>
+            {% else %}
+              <span class="badge badge-notdone">Not done</span>
+            {% endif %}
+          </div>
+
+          <div class="task-meta">
+            Created: {{ task.created_at }}
+            {% if task.deadline %}
+              &nbsp;·&nbsp;
+              <span class="deadline">Deadline: {{ task.deadline }}</span>
+            {% endif %}
+          </div>
+
+          {% with tags=task.tags.all %}
+            {% if tags %}
+              <div class="task-tags">
+                {% for tag in tags %}
+                  <span class="tag-chip">{{ tag.name }}</span>
+                {% endfor %}
+              </div>
+            {% endif %}
+          {% endwith %}
+        </div>
+
+        <div class="task-actions">
+          {% if task.is_completed %}
+            <form method="post" action="{% url 'todo:toggle-complete' task.pk %}">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-secondary btn-sm">Undo</button>
+            </form>
+          {% else %}
+            <form method="post" action="{% url 'todo:toggle-complete' task.pk %}">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-success btn-sm">Complete</button>
+            </form>
+          {% endif %}
+
+          <div class="task-links">
+            <a href="{% url 'todo:task-update' task.pk %}" class="btn btn-outline btn-sm">Update</a>
+            <a href="{% url 'todo:task-delete' task.pk %}" class="btn btn-danger btn-sm">Delete</a>
+          </div>
+        </div>
+
+      </div>
+    {% endfor %}
+  {% else %}
+    <p class="empty-state">No tasks yet. Add your first task!</p>
+  {% endif %}
 {% endblock %}

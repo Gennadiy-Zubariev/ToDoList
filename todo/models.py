@@ -1,17 +1,19 @@
 from django.db import models
 
+
 class Tag(models.Model):
     name = models.CharField(max_length=255)
 
     def __str__(self):
         return self.name
 
+
 class Task(models.Model):
     content = models.TextField()
-    created_at = models.DateField(auto_now_add=True)
-    deadline = models.DateField(null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    deadline = models.DateTimeField(null=True, blank=True)
     is_completed = models.BooleanField(default=False)
-    tags = models.ManyToManyField(Tag, blank=True, related_name="task")
+    tags = models.ManyToManyField(Tag, blank=True, related_name="tasks")
 
     def __str__(self):
         text = f"Task {self.pk}: created at-{self.created_at}, content - {self.content}."
@@ -20,11 +22,4 @@ class Task(models.Model):
         return text
 
     class Meta:
-        ordering = ("deadline", "-created_at")
-
-
-
-
-
-
-
+        ordering = ("is_completed", "-created_at")
